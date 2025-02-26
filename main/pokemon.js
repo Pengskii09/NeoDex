@@ -42,8 +42,7 @@ function displayPokemons(pokemon) {
                 <p class="caption-fonts">#${pokemonID}</p>
             </div>
             <div class="img-wrap">
-                <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${pokemonID}.png" alt="${pokemon.name}">
-
+                <img src="https://raw.githubusercontent.com/pokeapi/sprites/master/sprites/pokemon/other/home/${pokemonID}.png" alt="${pokemon.name}" />
             </div>
             <div class="name-wrap">
                 <p class="body3-fonts">#${pokemon.name}</p>
@@ -87,6 +86,15 @@ function handleSearch() {
     } else {
         notFoundMessage.style.display = "none";
     }
+}
+
+const closeButton = document.querySelector(".search-close-icon");
+closeButton.addEventListener("click", clearSearch);
+
+function clearSearch() {
+    searchInput.value = "";
+    displayPokemons(allPokemons);
+    notFoundMessage.style.display = "none";
 }
 
 // Pokémon

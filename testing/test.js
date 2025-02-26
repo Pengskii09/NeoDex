@@ -23,14 +23,14 @@ async function fetchData() {
 
         const data = await response.json();
         // const pokemonSprite = data.sprites.versions["generation-viii"].icons.front_default;
-        // const pokemonSprite = data.sprites.versions["generation-v"]["black-white"].animated.front_default;
+        const pokemonSprite = data.sprites.versions["generation-v"]["black-white"].animated.front_default;
         // const pokemonSprite = data.sprites.versions["generation-vi"]["x-y"].front_default;
         // const pokemonSprite = data.sprites.front_default;
         // const pokemonSprite = data.sprites.other.dream_world.front_default;
         // const pokemonSprite = data.sprites.other.home.front_default;
         // const pokemonSprite = data.sprites.other["official-artwork"].front_default;
         // const pokemonSprite = data.sprites.other.showdown.front_default;
-        const imgElement = document.getElementById("pokemonSpirte");
+        const imgElement = document.getElementById("pokemonSprite");
         imgElement.src = pokemonSprite;
         imgElement.style.display = "block";
         imgElement.style.height = "480px"; 
