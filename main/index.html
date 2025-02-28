@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NéoDex</title>
     <script src="./pokemon.js" defer></script>
+    <script src="./search.js" defer></script>
+    <link rel="stylesheet" href="style.css">
     <style>
     .pokemonSprite {
         image-rendering: pixelated;
@@ -16,7 +18,7 @@
 
 <body>
     <main class="main">
-        <header class="header-home">
+        <header class="header home">
             <div class="container">
                 <div class="logo-wrapper">
 
@@ -45,15 +47,15 @@
                             <p class="body2-fonts">Sort by:</p>
 
                             <div class="filter-wrap">
-                                <input type="radio" id="number" name="filters" value="number" checked>
-                                <label for="number" class="body3-fonts">Number</label>
+                                <div>
+                                    <input type="radio" id="number" name="filters" value="number" checked>
+                                    <label for="number" class="body3-fonts">Number</label>
+                                </div>
+                                <div>
+                                    <input type="radio" id="name" name="filters" value="name">
+                                    <label for="name" class="body3-fonts">Name</label>
+                                </div>
                             </div>
-
-                            <div>
-                                <input type="radio" id="name" name="filters" value="name">
-                                <label for="name" class="body3-fonts">Name</label>
-                            </div>
-
                         </div>
                     </div>
                 </div>
