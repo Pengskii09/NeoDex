@@ -7,17 +7,63 @@
     <link rel="stylesheet" href="teststyles.css">
 </head>
 <body>
-    <header>
+    <header class="header">
         <!-- Name/Logo -->
         <h1>
             NeoDex
         </h1>
 
         <!-- Sorting -->
+        <div class="sort-wrapper">
+            <div class="dropdown">
+            <button class="dropdown-btn">Sort By:</button>
+            <div class="dropdown-content">
+                <label>
+                <input type="radio" name="sort" value="id-asc" checked>
+                Number (Ascending)
+                </label>
+                <label>
+                <input type="radio" name="sort" value="id-desc">
+                Number (Descending)
+                </label>
+                <label>
+                <input type="radio" name="sort" value="alpha-asc">
+                Alphabetical (A-Z)
+                </label>
+                <label>
+                <input type="radio" name="sort" value="alpha-desc">
+                Alphabetical (Z-A)
+                </label>
+            </div>
+            </div>
+        </div>
+  
 
         <!-- Search Bar -->
+        <div class="search-wrap">
+            <img src="./assets/search.svg" alt="search icon" class="search-icon">
+
+            <input type="text" class="search-input body3-fonts" placeholder="Search" id="search-input">
+
+            <img src="assets/cross.svg" alt="cross icon" class="search-close-icon" id="search-close-icon">
+        </div>
 
         <!-- Search by Radio Buttons -->
+        <div class="search-by-wrapper">
+            <div class="dropdown">
+            <button class="dropdown-btn">Search by</button>
+            <div class="dropdown-content">
+                <label>
+                <input type="radio" name="searchBy" value="name" checked>
+                Name
+                </label>
+                <label>
+                <input type="radio" name="searchBy" value="id">
+                ID No.
+                </label>
+            </div>
+            </div>
+        </div>
     </header>
 
     <main>

@@ -3,6 +3,7 @@ html, body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
+  font-family: "Poppins", sans-serif;
 }
 
 p {
@@ -60,7 +61,114 @@ p {
   line-height: var(--caption-line-height);
 }
 
-/* Pokemon List */
+/* HEADER */
+.header {
+  background-color: #f8f8f8; /* Light background for header */
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  /* justify-content: space-between; */
+  gap: 20px;
+}
+
+/* Logo/Name */
+.header h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #333;
+}
+
+/* --- Dropdown Common Styles --- */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-btn {
+  padding: 8px 12px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 16px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+/* Dropdown Content (hidden by default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top: 110%;
+  left: 0;
+  background-color: #fff;
+  min-width: 200px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  z-index: 100;
+}
+
+/* Show dropdown content on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Dropdown labels & radio buttons */
+.dropdown-content label {
+  display: block;
+  padding: 5px 0;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.dropdown-content input[type="radio"] {
+  margin-right: 8px;
+}
+
+/* --- Sorting Wrapper --- */
+.sort-wrapper {
+  display: inline-block;
+}
+
+/* --- Search Bar Styles --- */
+.search-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border-radius: 4px;
+  padding: 5px 10px;
+}
+
+.search-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.search-input {
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  flex: 1;
+  padding: 5px 10px;
+  margin: 4px;
+  border: 1px solid #ccc;
+}
+
+.search-close-icon {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+/* --- Search By Wrapper --- */
+.search-by-wrapper {
+  display: inline-block;
+}
+
+
+/* POKEMON LIST */
 
 .list-wrapper {
   display: grid;
@@ -71,7 +179,7 @@ p {
   padding: 16px;
   box-sizing: border-box;
   max-width: 900px;
-  border: 1px solid #ccc;
+  /* border: 1px solid #ccc; */
   margin: 0 auto;     
 
 }
@@ -91,6 +199,7 @@ p {
 
   /* Design */
   background-color: rgba(235, 235, 235, 0.2);
+  border-radius: 8px;
   /* border: 3px solid rgb(15, 100, 2); */
   /* border: 1px solid rgb(240, 240, 240); */
 
@@ -102,7 +211,7 @@ p {
     rgb(240, 240, 240) 10px
   ); */
   
-  border-radius: 8px;
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
 }
 
 /* .list-item * {
@@ -117,20 +226,24 @@ p {
 .img-wrap {
   width: 160px;   /* Fixed width */
   height: 160px;  /* Fixed height */
-  overflow: hidden; /* Ensures the image doesn't spill out */
+  /* overflow: hidden; */
   display: flex;              /* Make .img-wrap a flex container */
   justify-content: center;    /* Center horizontally */
-  align-items: center;        
+  align-items: center;
 
   /* border: 1px solid #ccc; */
 }
 
 #pokemonSprite {
-  max-width: 100%;
-  max-height: 100%;
+  /* max-width: 100%;
+  max-height: 100%; */
+  width: 150px;
+  height: 150px;
   object-fit: contain; /* Keeps the image from being distorted */
   image-rendering: pixelated;
   /* border: 1px solid #ccc; */
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
+  z-index: 10;
 }
 
 .name-wrap {
@@ -148,6 +261,28 @@ p {
   /* border: 1px solid #ccc; */
 }
 
+/* .list-item:hover {
+  transform: scale(1.2) perspective(1200px) translateX(-0%) rotateX(20deg) translateZ(0);
+  box-shadow: 0px 35px 32px -8px rgba(0, 0, 0, 0.50);
+  border: 2px solid rgb(255, 138, 138);
+} */
+
+
+@keyframes tiltShake {
+  0% { transform: scale(1) rotate(0deg); }
+  25% { transform: scale(1.1) rotate(2deg); }
+  50% { transform: scale(1.1) rotate(0deg); }
+  75% { transform: scale(1.1) rotate(1deg); }
+  100% { transform: scale(1.1) rotate(0deg); }
+}
+
+.list-item:hover {
+  border: 2px solid rgb(255, 118, 118);
+  animation: tiltShake 0.4s ease forwards;
+  background-color: rgb(245, 245, 245);
+  box-shadow: 0px 20px 32px -8px rgba(0, 0, 0, 0.50);
+}
+
 
 /* Responsiveness */
 
@@ -155,5 +290,13 @@ p {
 @media (max-width: 600px) {
   :root {
     --card-width: 150px;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
