@@ -1,4 +1,159 @@
-#pokemonSprite {
-    image-rendering: pixelated;
-  }
+/* Prevent horizontal scrolling */
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+p {
+  margin: 0;
+}
+
+/* Define a CSS variable for card width */
+:root {
+  --card-width: 200px;
+  --card-height: 250px;
   
+  --identity-primary: #dc0a2d;
+
+  --grayscale-dark: #212121;
+  --grayscale-medium: #666666;
+  --grayscale-light: #e0e0e0;
+  --grayscale-background: #efefef;
+  --grayscale-white: #ffffff;
+
+  --headline-font-size: 24px;
+  --body1-font-size: 1.2rem;
+  --body2-font-size: 12px;
+  --body3-font-size: 10px;
+  --subtitle1-font-size: 14px;
+  --subtitle2-font-size: 12px;
+  --subtitle3-font-size: 10px;
+  --caption-font-size: 8px;
+
+  --headline-line-height: 32px;
+  --common-line-height: 16px;
+  --caption-line-height: 12px;
+
+  --font-weight-regular: 400;
+  --font-weight-bold: 700;
+
+  --drop-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.2);
+  --drop-shadow-hover: 0px 3px 12px 3px rgba(0, 0, 0, 0.2);
+  --drop-shadow-inner: 0px 1px 3px 1px rgba(0, 0, 0, 0.25) inset;
+}
+
+.body1-fonts {
+  font-size: var(--body1-font-size);
+}
+
+.body2-fonts {
+  font-size: var(--body2-font-size);
+}
+
+.body3-fonts {
+  font-size: var(--body3-font-size);
+}
+
+.caption-fonts {
+  font-size: var(--caption-font-size);
+  line-height: var(--caption-line-height);
+}
+
+/* Pokemon List */
+
+.list-wrapper {
+  display: grid;
+  /* Repeat columns that exactly match the card width */
+  grid-template-columns: repeat(auto-fit, var(--card-width));
+  gap: 16px;            /* Space between cards */
+  justify-content: center; /* Centers grid items in the row */
+  padding: 16px;
+  box-sizing: border-box;
+  max-width: 900px;
+  border: 1px solid #ccc;
+  margin: 0 auto;     
+
+}
+
+
+.list-item {
+  width: var(--card-width);  /* Fixed width for all cards */
+  height: var(--card-height);
+  box-sizing: border-box;
+  padding: 8px;
+
+  /* Flex settings to center content horizontally but stick to the top vertically */
+  display: flex;
+  flex-direction: column;  /* Stack children vertically */
+  align-items: center;     /* Center horizontally */
+  justify-content: flex-start; /* Align items to the top */
+
+  /* Design */
+  background-color: rgba(235, 235, 235, 0.2);
+  /* border: 3px solid rgb(15, 100, 2); */
+  /* border: 1px solid rgb(240, 240, 240); */
+
+  /* background: repeating-linear-gradient(
+    to bottom,
+    rgb(250, 250, 250) 0px,
+    rgb(250, 250, 250) 5px,
+    rgb(240, 240, 240) 5px,
+    rgb(240, 240, 240) 10px
+  ); */
+  
+  border-radius: 8px;
+}
+
+/* .list-item * {
+  border: 1px solid #ccc;
+} */
+
+.number-wrap {
+  /* border: 1px solid #ccc; */
+
+}
+
+.img-wrap {
+  width: 160px;   /* Fixed width */
+  height: 160px;  /* Fixed height */
+  overflow: hidden; /* Ensures the image doesn't spill out */
+  display: flex;              /* Make .img-wrap a flex container */
+  justify-content: center;    /* Center horizontally */
+  align-items: center;        
+
+  /* border: 1px solid #ccc; */
+}
+
+#pokemonSprite {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain; /* Keeps the image from being distorted */
+  image-rendering: pixelated;
+  /* border: 1px solid #ccc; */
+}
+
+.name-wrap {
+  /* border: 1px solid #ccc; */
+}
+
+.types-wrap {
+  /* border: 1px solid #ccc; */
+  display: flex;
+  gap: 8px; /* Optional: adds spacing between types */
+  align-items: center; /* Aligns items vertically in the center */
+}
+
+.types-wrap * {
+  /* border: 1px solid #ccc; */
+}
+
+
+/* Responsiveness */
+
+/* Media query to adjust card size on smaller screens */
+@media (max-width: 600px) {
+  :root {
+    --card-width: 150px;
+  }
+}

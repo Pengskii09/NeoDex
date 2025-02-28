@@ -10,7 +10,10 @@ let allPokemons = [];
 fetch(`https://pokeapi.co/api/v2/pokemon?limit=${MAX_POKEMON}`)
 .then((response) => response.json())
 .then((data) => {
+    console.log(data);
     allPokemons = data.results;
+    console.log(allPokemons);
+
     displayPokemons(allPokemons);
 });
 

@@ -23,7 +23,10 @@ async function loadPokemon(id) {
             fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}`).then((res) => 
                 res.json()
             ),
+
         ]);
+        console.log("Pokemon Data:", pokemon);
+            console.log("Pokemon Species Data:", pokemonSpecies);
 
         const abilitiesWrapper = document.querySelector(".pokemon-detail-wrap .pokemon-detail.move");
         abilitiesWrapper.innerHTML = "";
