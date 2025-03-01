@@ -4,83 +4,80 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NéoDex</title>
-    <script src="./pokemon.js" defer></script>
-    <script src="./search.js" defer></script>
-    <link rel="stylesheet" href="style.css">
-    <style>
-    .pokemonSprite {
-        image-rendering: pixelated;
-    }
-    </style>
+    <link rel="stylesheet" href="teststyles.css">
 </head>
-
-<!-- Pokémon -->
-
 <body>
-    <main class="main">
-        <header class="header home">
-            <div class="container">
-                <div class="logo-wrapper">
+    <header class="header">
+        <!-- Name/Logo -->
+         <div class="logo-wrapper">
+            <img src="./assets/pokeball.svg" alt="pokeball" id="pokeball">
+            <h1>
+                NéoDex
+            </h1>
+         </div>
 
-                    <img src="./assets/pokeball.svg" alt="pokeball">
-
-                    <h1>
-                        NéoDex
-                    </h1>
-                </div>
-
-                <div class="search-wrapper">
-                    <div class="search-wrap">
-                        <img src="./assets/search.svg" alt="search icon" class="search-icon">
-
-                        <input type="text" class="search-input body3-fonts" placeholder="Search" id="search-input">
-
-                        <img src="assets/cross.svg" alt="cross icon" class="search-close-icon" id="search-close-icon">
-                    </div>
-
-                    <div class="sort-wrapper">
-                        <div class="sort-wrap">
-                            <img src="./assets/sorting.svg" alt="sorting" class="sort-icon" id="sort-icon">
-                        </div>
-
-                        <div class="filter-wrapper">
-                            <p class="body2-fonts">Sort by:</p>
-
-                            <div class="filter-wrap">
-                                <div>
-                                    <input type="radio" id="number" name="filters" value="number" checked>
-                                    <label for="number" class="body3-fonts">Number</label>
-                                </div>
-                                <div>
-                                    <input type="radio" id="name" name="filters" value="name">
-                                    <label for="name" class="body3-fonts">Name</label>
-                                </div>
-                            </div>
-                        </div>
+        <div class="sort-search-wrap">        
+            <!-- Sorting -->
+            <div class="sort-wrapper">
+                <div class="dropdown">
+                    <button class="dropdown-btn">Sort By:</button>
+                    <div class="dropdown-content">
+                        <label>
+                        <input type="radio" name="sort" value="id-asc" checked>
+                        Number (Ascending)
+                        </label>
+                        <label>
+                        <input type="radio" name="sort" value="id-desc">
+                        Number (Descending)
+                        </label>
+                        <label>
+                        <input type="radio" name="sort" value="alpha-asc">
+                        Alphabetical (A-Z)
+                        </label>
+                        <label>
+                        <input type="radio" name="sort" value="alpha-desc">
+                        Alphabetical (Z-A)
+                        </label>
                     </div>
                 </div>
             </div>
-        </header>
+    
 
-        <section class="pokemon-list">
-            <div class="container">
-                <div class="list-wrapper">
+            <!-- Search Bar -->
+            <div class="search-wrap">
+                <img src="./assets/search.svg" alt="search icon" class="search-icon">
+                <input type="text" class="search-input body3-fonts" placeholder="Search" id="search-input">
 
+                <img src="assets/cross.svg" alt="cross icon" class="search-close-icon" id="search-close-icon">
+            </div>
+
+            <!-- Search by Radio Buttons -->
+            <div class="search-by-wrapper">
+                <div class="dropdown">
+                <button class="dropdown-btn">Search by</button>
+                <div class="dropdown-content">
+                    <label>
+                    <input type="radio" name="searchBy" value="name" checked>
+                    Name
+                    </label>
+                    <label>
+                    <input type="radio" name="searchBy" value="id">
+                    ID No.
+                    </label>
+                </div>
                 </div>
             </div>
-            <div id="not-found-message">Pokémon not found</div>
-        </section>
+        </div>
+    </header>
+
+    <main>
+        <div class="list-wrapper">
+
+        </div>
     </main>
+
+    <script src="index-pokemon-list.js"></script>
 </body>
 </html>
 
 <!-- Pokémon -->
-
-
-<!-- <div class="img-wrap">
-    <img src="https://raw.githubusercontent.com/pokeapi/sprites/master/sprites/pokemon/other/home/${pokemonID}.png" alt="${pokemon.name}" />
-</div> -->
-
-<!-- <div class="img-wrap">
-    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/${pokemonID}.png" alt="${pokemon.name}" />
-</div> -->
