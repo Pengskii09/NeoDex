@@ -6,19 +6,40 @@
 // const pokemonSprite = data.sprites.other["official-artwork"].front_default;
 // const pokemonSprite = data.sprites.other.showdown.front_default;
 
-const pokemonCount = 50;
-var pokedex = {};
+// GEN 1
+// const pokemonCount = 151;
 
+// GEN 5
+const pokemonCount = 649;
+
+var pokedex = {};
 window.onload = async function() {
-    // Fetch each Pokémon
+    // Fetch each Pokémon concurrently.
+    const promises = [];
     for (let i = 1; i <= pokemonCount; i++) {
-        await getPokemon(i);
+        promises.push(getPokemon(i));
     }
+    await Promise.all(promises);
     
-    // Once all are fetched, display them
-    displayPokemons();
+    // Initially display all Pokémon.
+    filterPokemons("");
     console.log(pokedex);
-}
+
+    // Add event listener to the search input.
+    const searchInput = document.getElementById("search-input");
+    searchInput.addEventListener("input", () => {
+        const query = searchInput.value.trim().toLowerCase();
+        filterPokemons(query);
+    });
+    
+    // Add event listener to the radio buttons so that changing the mode re-filters the list.
+    document.querySelectorAll('input[name="searchBy"]').forEach(radio => {
+        radio.addEventListener("change", () => {
+            const query = searchInput.value.trim().toLowerCase();
+            filterPokemons(query);
+        });
+    });
+};
 
 async function getPokemon(num) {
     let url = "https://pokeapi.co/api/v2/pokemon/" + num.toString();
@@ -195,3 +216,71 @@ function displayPokemons() {
         }
     }
 }
+// Updated filterPokemons function with sorting
+function filterPokemons(query) {
+    const listWrapper = document.querySelector(".list-wrapper");
+    listWrapper.innerHTML = "";
+    
+    // Get the search mode ("name" or "id") and the sort mode.
+    const searchBy = document.querySelector('input[name="searchBy"]:checked').value;
+    const sortBy = document.querySelector('input[name="sort"]:checked').value;
+    
+    // Build an array of Pokémon that match the search query.
+    let filteredPokemons = [];
+    for (let i = 1; i <= pokemonCount; i++) {
+        if (pokedex[i]) {
+            let pokemon = pokedex[i];
+            if (
+                query === "" || 
+                (searchBy === "name" && pokemon.name.toLowerCase().includes(query)) || 
+                (searchBy === "id" && i.toString() === query)
+            ) {
+                filteredPokemons.push({ id: i, pokemon: pokemon });
+            }
+        }
+    }
+    
+    // Sort the filtered array based on the selected sort option.
+    if (sortBy === "id-asc") {
+        filteredPokemons.sort((a, b) => a.id - b.id);
+    } else if (sortBy === "id-desc") {
+        filteredPokemons.sort((a, b) => b.id - a.id);
+    } else if (sortBy === "alpha-asc") {
+        filteredPokemons.sort((a, b) => a.pokemon.name.localeCompare(b.pokemon.name));
+    } else if (sortBy === "alpha-desc") {
+        filteredPokemons.sort((a, b) => b.pokemon.name.localeCompare(a.pokemon.name));
+    }
+    
+    // Display a "No Results" message if no Pokémon match the filter.
+    if (filteredPokemons.length === 0) {
+        listWrapper.innerHTML = `<div class="no-results">No Pokemon Found</div>`;
+        return;
+    }
+    
+    // Create and append cards for each Pokémon in the sorted list.
+    filteredPokemons.forEach(item => {
+        const card = createCard(item.pokemon, item.id);
+        listWrapper.appendChild(card);
+    });
+}
+
+// Add event listeners to the sort radio buttons to trigger filtering/sorting on change.
+document.querySelectorAll('input[name="sort"]').forEach(radio => {
+    radio.addEventListener("change", () => {
+        const query = document.getElementById("search-input").value.trim().toLowerCase();
+        filterPokemons(query);
+    });
+});
+
+const inputElement = document.querySelector("#search-input");
+const search_icon = document.querySelector("#search-close-icon");
+
+search_icon.addEventListener("click", handleSearchCloseOnClick);
+function handleSearchCloseOnClick() {
+    const searchInput = document.querySelector("#search-input");
+    searchInput.value = "";
+  
+    // Re-filter with an empty query to display all Pokémon.
+    filterPokemons("");
+  }
+  
