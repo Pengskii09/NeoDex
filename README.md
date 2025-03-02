@@ -12,6 +12,6 @@ Features:
 - Powered by the PokéAPI for real-time Pokémon data
 
 Technologies Used
-Frontend: HTML, CSS, JavaScript
-Data Handling: PokéAPI for fetching Pokémon details dynamically
+- Frontend: HTML, CSS, JavaScript
+- Data Handling: PokéAPI for fetching Pokémon details dynamically
 
