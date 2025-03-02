@@ -12,8 +12,8 @@ document.addEventListener("DOMContentLoaded", () => {
     currentPokemonID = id;
     loadPokemon(id);
 });
-const clickSound = new Audio("./sound/ruby_0005.wav"); // Load your click sound file
-clickSound.volume = 0.2;
+const clickSound = new Audio("./sound/ruby_006C.wav"); // Load your click sound file
+clickSound.volume = 0.1;
 
 async function loadPokemon(id) {
     try {

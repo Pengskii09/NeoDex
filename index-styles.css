@@ -9,8 +9,8 @@ html, body {
   background: url('assets/wall4.jpg') no-repeat center center;
   background-size: cover;  /* Ensures it covers the entire viewport */
   background-attachment: fixed; /* Keeps the background in place on scroll */
-}
 
+}
 
 p {
   margin: 0;
@@ -105,7 +105,11 @@ p {
 /* 2nd Div */
 .sort-search-wrap {
   display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
   gap: 10px;
+  /* border: 1px solid #000; */
 }
 
 /* --- Dropdown Common Styles --- */
@@ -226,7 +230,7 @@ p {
   background-color: rgba(47, 43, 43, 0.769);
   /* background-color: rgb(255, 255, 255); */
   margin: 0 auto;  
-  margin-bottom: 12px;   
+  margin-bottom: 20px;   
 }
 
 
@@ -357,6 +361,18 @@ p {
   opacity: 0.7;
 }
 
+.no-results {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--grayscale-white);
+  /* border: 1px solid #000; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+
 
 /* Responsiveness */
 
@@ -368,9 +384,24 @@ p {
 }
 
 /* Responsive adjustments */
-@media (max-width: 768px) {
+@media (max-width: 850px) {
   .header {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 0;
+    gap: 2px;
+  }
+
+  .logo-wrapper {
+    position: relative;
+    align-items: center;
+    left: -10px;
+  }
+
+  .list-wrapper {
+    border-radius: 0;
+    background-color: rgba(47, 43, 43, 0.5);
+    margin-bottom: 0px;
   }
 }

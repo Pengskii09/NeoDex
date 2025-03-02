@@ -13,26 +13,28 @@
 const pokemonCount = 649;
 
 var pokedex = {};
+
 window.onload = async function() {
-    // Fetch each Pokémon concurrently.
+    const listWrapper = document.querySelector(".list-wrapper");
+    listWrapper.innerHTML = "<div class='no-results'>Loading...</div>"; 
+
     const promises = [];
     for (let i = 1; i <= pokemonCount; i++) {
         promises.push(getPokemon(i));
     }
     await Promise.all(promises);
-    
-    // Initially display all Pokémon.
+
+    // Remove the loading message and display Pokémon
     filterPokemons("");
     console.log(pokedex);
 
-    // Add event listener to the search input.
+    // Event Listeners
     const searchInput = document.getElementById("search-input");
     searchInput.addEventListener("input", () => {
         const query = searchInput.value.trim().toLowerCase();
         filterPokemons(query);
     });
-    
-    // Add event listener to the radio buttons so that changing the mode re-filters the list.
+
     document.querySelectorAll('input[name="searchBy"]').forEach(radio => {
         radio.addEventListener("change", () => {
             const query = searchInput.value.trim().toLowerCase();
@@ -40,6 +42,7 @@ window.onload = async function() {
         });
     });
 };
+
 
 async function getPokemon(num) {
     let url = "https://pokeapi.co/api/v2/pokemon/" + num.toString();
@@ -125,7 +128,7 @@ function createCard(pokemon, id) {
             <img id=pokemonSprite src="${pokemon.img}" alt="${pokemon.name}" />
         </div>
         <div class="number-wrap body3-fonts">
-            <p>#${id}</p>
+            <p>#${String(id).padStart(4, "0")}</p>
         </div>
         <div class="name-wrap body1-fonts">
             <p>${pokemon.name}</p>
@@ -253,7 +256,7 @@ function filterPokemons(query) {
     
     // Display a "No Results" message if no Pokémon match the filter.
     if (filteredPokemons.length === 0) {
-        listWrapper.innerHTML = `<div class="no-results">No Pokemon Found</div>`;
+        listWrapper.innerHTML = `<div class="no-results">No Pokémon Found</div>`;
         return;
     }
     
@@ -276,11 +279,11 @@ const inputElement = document.querySelector("#search-input");
 const search_icon = document.querySelector("#search-close-icon");
 
 search_icon.addEventListener("click", handleSearchCloseOnClick);
+
 function handleSearchCloseOnClick() {
     const searchInput = document.querySelector("#search-input");
     searchInput.value = "";
   
     // Re-filter with an empty query to display all Pokémon.
     filterPokemons("");
-  }
-  
+}
