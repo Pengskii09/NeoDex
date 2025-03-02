@@ -12,21 +12,18 @@ document.addEventListener("DOMContentLoaded", () => {
     currentPokemonID = id;
     loadPokemon(id);
 });
+const clickSound = new Audio("./sound/ruby_0005.wav"); // Load your click sound file
+clickSound.volume = 0.2;
 
 async function loadPokemon(id) {
-    try{
+    try {
         const [pokemon, pokemonSpecies] = await Promise.all([
-                fetch(`https://pokeapi.co/api/v2/pokemon/${id}`).then((res) => 
-                res.json()
-            ),
-
-            fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}`).then((res) => 
-                res.json()
-            ),
-
+            fetch(`https://pokeapi.co/api/v2/pokemon/${id}`).then(res => res.json()),
+            fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}`).then(res => res.json())
         ]);
+
         console.log("Pokemon Data:", pokemon);
-            console.log("Pokemon Species Data:", pokemonSpecies);
+        console.log("Pokemon Species Data:", pokemonSpecies);
 
         const abilitiesWrapper = document.querySelector(".pokemon-detail-wrap .pokemon-detail.move");
         abilitiesWrapper.innerHTML = "";
@@ -36,29 +33,33 @@ async function loadPokemon(id) {
             const flavorText = getEnglishFlavorText(pokemonSpecies);
             document.querySelector(".body3-fonts.pokemon-description").textContent = flavorText;
 
-            const [leftArrow, rightArrow] = ["#leftArrow", "#rightArrow"].map((sel) => document.querySelector(sel));
+            const [leftArrow, rightArrow] = ["#leftArrow", "#rightArrow"].map(sel => document.querySelector(sel));
             leftArrow.removeEventListener("click", navigatePokemon);
             rightArrow.removeEventListener("click", navigatePokemon);
 
             if (id !== 1) {
                 leftArrow.addEventListener("click", () => {
+                    clickSound.play(); // Play sound effect
                     navigatePokemon(id - 1);
                 });
             }
             if (id !== 649) {
                 rightArrow.addEventListener("click", () => {
+                    clickSound.play(); // Play sound effect
                     navigatePokemon(id + 1);
                 });
             }
+
             window.history.pushState({}, "", `./species.html?id=${id}`);
         }
 
         return true;
     } catch (error) {
-        console.error("An error occured while fetching Pokemon data", error);
+        console.error("An error occurred while fetching Pokémon data", error);
         return false;
     }
 }
+
 
 async function navigatePokemon(id) {
     currentPokemonID = id;
@@ -101,46 +102,58 @@ function rgbaFromHex(hexColor){
         parseInt(hexColor.slice(5, 7), 16),
     ].join(", ");
 }
-
 function setTypeBackgroundColor(pokemon) {
-    const mainType = pokemon.types[0].type.name;
-    const color = typeColors[mainType];
+    const types = pokemon.types.map(t => t.type.name);
+    const primaryType = types[0];
+    const secondaryType = types[1] || primaryType; // Use the same if only one type
+    const color1 = typeColors[primaryType];
+    const color2 = typeColors[secondaryType];
 
-    if(!color) {
-        console.warn(`Color not defined for type: ${mainType}`)
+    if (!color1 || !color2) {
+        console.warn(`Color not defined for type(s): ${types.join(", ")}`);
         return;
     }
 
+    // Apply single-color background (primary type)
     const detailMainElement = document.querySelector(".detail-main");
-    setElementStyles([detailMainElement], "backgroundColor", color);
-    setElementStyles([detailMainElement], "borderColor", color);
+    setElementStyles([detailMainElement], "backgroundColor", color1);
+    setElementStyles([detailMainElement], "borderColor", color2); // Use secondary color for border
 
-    setElementStyles(
-        document.querySelectorAll(".power-wrapper > p"),
-        "backgroundColor",
-        color
-    );
-    
     setElementStyles(
         document.querySelectorAll(".stats-wrap p.stats"),
         "color",
-        color
+        color2 // Use secondary color for stats
     );
-    
+
     setElementStyles(
         document.querySelectorAll(".stats-wrap .progress-bar"),
         "color",
-        color
+        color2
     );
 
-    const rgbaColor = rgbaFromHex(color);
+    // Remove existing type elements before adding new ones
+    const powerWrapper = document.querySelector(".power-wrapper");
+    powerWrapper.innerHTML = ""; // Clear previous types
+
+    // Dynamically create type elements
+    types.forEach(type => {
+        const typeElement = document.createElement("p");
+        typeElement.className = `body3-fonts type ${type}`;
+        typeElement.textContent = type;
+        typeElement.style.backgroundColor = typeColors[type]; // Set individual type colors
+        powerWrapper.appendChild(typeElement);
+    });
+
+    // Update progress bar styles dynamically
+    const rgbaColor1 = rgbaFromHex(color1);
+    const rgbaColor2 = rgbaFromHex(color2);
     const styleTag = document.createElement("style");
     styleTag.innerHTML = `
         .stats-wrap .progress-bar::-webkit-progress-bar {
-            background-color:rgba(${rgbaColor}, 0.5);
+            background-color: rgba(${rgbaColor1}, 0.5);
         }
         .stats-wrap .progress-bar::-webkit-progress-value {
-            background-color: ${rgbaColor};
+            background-color: ${rgbaColor2};
         }
     `;
     document.head.appendChild(styleTag);
@@ -189,13 +202,17 @@ function displayPokemonDetails(pokemon){
     document.querySelector(".pokemon-detail-wrap .pokemon-detail p.body3-fonts.weight").textContent = `${weight / 10} kg`;    
     document.querySelector(".pokemon-detail-wrap .pokemon-detail p.body3-fonts.height").textContent = `${height / 10} m`;
 
+    // const abilitiesWrapper = document.querySelector(".pokemon-detail-wrap .pokemon-detail.move");
+    // abilities.forEach(({ability}) => {
+    //     createAndAppendElement(abilitiesWrapper, "p", {
+    //         className: "body3-fonts",
+    //         textContent: ability.name,
+    //     });
+    // });
+
     const abilitiesWrapper = document.querySelector(".pokemon-detail-wrap .pokemon-detail.move");
-    abilities.forEach(({ability}) => {
-        createAndAppendElement(abilitiesWrapper, "p", {
-            className: "body3-fonts",
-            textContent: ability.name,
-        });
-    });
+    abilitiesWrapper.textContent = abilities.map(({ ability }) => ability.name).join(", ");
+
 
     const statsWrapper = document.querySelector(".stats-wrapper");
     statsWrapper.innerHTML = "";
